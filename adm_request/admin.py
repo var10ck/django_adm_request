@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import Document, ADMRequest, StoryRecord, Conclusion, \
     ConclusionType, Investigation
+from django.contrib.admin import site
+import adminactions.actions as actions
+
+# register all adminactions
+actions.add_to_site(site)
 
 
 class DocumentAdmin(admin.ModelAdmin):
