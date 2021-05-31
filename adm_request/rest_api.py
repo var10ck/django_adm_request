@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
-from .models import Document, ADMRequest, StoryRecord, Conclusion, \
+from .models import Document, ADMRequest, Conclusion, \
     ConclusionType, Investigation
 
 
@@ -43,7 +43,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
 class InvestigationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Investigation
-        fields = ['adm_request', 'description', 'result', 'documents', 'created', 'updated']
+        fields = '__all__'
 
 
 class InvestigationViewSet(viewsets.ModelViewSet):

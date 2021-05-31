@@ -27,8 +27,7 @@ urlpatterns = [
                   path('', RedirectView.as_view(url='admin/')),
                   path('admin/', admin.site.urls),
                   re_path(r'^report_builder/', include('report_builder.urls')),
-                  re_path(r'^api/adm_request/',
-                          include(('adm_request.api_urls', 'adm_request'), namespace='adm_request_api')),
+                  re_path(r'^api/adm_request/', include('adm_request.api_urls')),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
