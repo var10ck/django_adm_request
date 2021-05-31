@@ -18,7 +18,8 @@ class Document(models.Model):
                             db_index=True,
                             blank=True,
                             default='Документ',
-                            help_text='Если '
+                            help_text='Можно не заполнять данное поле. '
+                                      'Название документа будет создано автоматически',
                             )
     slug = models.SlugField(max_length=200,
                             db_index=True,
@@ -50,12 +51,42 @@ class Document(models.Model):
         return f'Документ \"{self.file.name}\"'
 
 
+class Reason(models.Model):
+    name = models.CharField(_('Название'),
+                            max_length=100)
+    description = models.TextField(_('Описание'),
+                                   max_length=500,
+                                   blank=True,
+                                   null=True,
+                                   )
+    created = models.DateTimeField(auto_now_add=True,
+                                   verbose_name=_('Дата создания'),
+                                   )
+    updated = models.DateTimeField(auto_now=True,
+                                   verbose_name=_('Дата обновления'),
+                                   )
+
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = _('Причина обращения')
+        verbose_name_plural = _('Причина обращения')
+        ordering = ('-updated', )
+
+
 class ADMRequest(models.Model):
     number = models.IntegerField(_('Номер претензии'),
                                  db_index=True,
                                  blank=False,
                                  unique=True,
                                  )
+    reason = models.ForeignKey(Reason,
+                               verbose_name=_('Причина обращения'),
+                               help_text='Выберите причину обращения',
+                               on_delete=models.CASCADE,
+                               null=True,
+                               )
     date = models.DateField(_('От'),
                             auto_now=False,
                             )

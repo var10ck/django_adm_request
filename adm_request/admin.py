@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Document, ADMRequest, StoryRecord, Conclusion, \
-    ConclusionType, Investigation
+    ConclusionType, Investigation, Reason
 from django.contrib.admin import site
 import adminactions.actions as actions
 
@@ -20,6 +20,16 @@ class DocumentAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('file',)}
 
 
+class ReasonAdmin(admin.ModelAdmin):
+    list_display = ['name',
+                    'created',
+                    'updated',
+                    ]
+    list_filter = ['created',
+                   'updated',
+                   ]
+
+
 class StoryRecordInline(admin.StackedInline):
     model = StoryRecord
     fk_name = 'investigation'
@@ -29,6 +39,7 @@ class StoryRecordInline(admin.StackedInline):
 
 class ADMRequestAdmin(admin.ModelAdmin):
     list_display = ['number',
+                    'reason',
                     'amount',
                     'date',
                     ]
@@ -86,3 +97,4 @@ admin.site.register(ADMRequest, ADMRequestAdmin)
 admin.site.register(Investigation, InvestigationAdmin)
 admin.site.register(ConclusionType, ConclusionTypeAdmin)
 admin.site.register(Conclusion, ConclusionAdmin)
+admin.site.register(Reason, ReasonAdmin)
