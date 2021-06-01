@@ -89,5 +89,3 @@ local_settings.py
 .env
 db.sqlite3
 env/
-migrations/
-/adm_request/migrations/
