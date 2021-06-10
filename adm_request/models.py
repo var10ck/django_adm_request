@@ -6,6 +6,10 @@ import uuid
 from django.utils.text import slugify
 
 
+REASONS_FOR_PETITION = (('ER', 'Рассчёт суммы обмена билетов'),
+                        ('VR', 'Рассчёт суммы добровольных возвратов билетов'),
+                        ('FR', 'Рассчёт суммы вынужденных возвратов билетов'))
+
 # Document model
 class Document(models.Model):
     def get_file_path(self, filename):
@@ -81,11 +85,10 @@ class ADMRequest(models.Model):
                                  blank=False,
                                  unique=True,
                                  )
-    reason = models.ForeignKey(Reason,
-                               verbose_name=_('Причина обращения'),
-                               help_text='Выберите причину обращения',
-                               on_delete=models.CASCADE,
-                               null=True,
+    reason = models.CharField(_('Причина обращения'),
+                              max_length=200,
+                              choices=REASONS_FOR_PETITION,
+                              default='ER',
                                )
     date = models.DateField(_('От'),
                             auto_now=False,
